@@ -23,27 +23,34 @@ async function run() {
     await client.connect();
     // console.log('connect to the data base')
 
-    const database = client.db("tourismWeb");
+    const database = client.db("tourismWeb").collection("services");
+   
     // Services Collection
-    const servicesCollection = database.collection("services");
+    const bookingCollect = client.db("tourismWeb").collection("booking");
+   
 
     // Get API
     app.get("/services", async (req, res) => {
-      const cursor = servicesCollection.find({});
+      const cursor = database.find({});
       const services = await cursor.toArray();
       res.send(services);
     });
 
-    // Add Events
-    app.post("/addEvents", async (req, res) => {
-      
-      const data = req.body;
-      const result = await servicesCollection.insertOne(data);
-      // console.log(
-      //   `${result.matchedCount} document(s) matched the filter, updated ${result.modifiedCount} document(s)`
-      // );
-      console.log( "got newuser", req.body);
-      console.log(result)
+    // UI Address get API
+    app.get('/booking', async(req, res)=>{
+      const cursor = bookingCollection.find({});
+      const booking = await cursor.toArray();
+      res.send(booking);
+
+    });
+
+    // Add Address
+    app.post("/booking", async (req, res) => {
+      const booking = req.body;
+      console.log("hit", booking);
+      const result = await bookingCollect.insertOne(booking);
+      console.log(result);
+
       res.json(result);
     });
   } finally {
