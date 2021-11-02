@@ -38,20 +38,20 @@ async function run() {
       res.send(services);
     });
     // Get single
-    app.get('services/:id', async(req, res)=>{
-      const id = req.params.id;
-      console.log('getting specifi service', id)
-      const query = {_id: ObjectId(id)};
-      const services = await database.findOne(query);
-      res.json(service);
-    })
+    // app.get('services/:id', async(req, res)=>{
+    //   const id = req.params.id;
+    //   console.log('getting specifi service', id)
+    //   const query = {_id: ObjectId(id)};
+    //   const services = await database.findOne(query);
+    //   res.json(service);
+    // })
 
-    // PostAPI
-    app.post('/services',async(req, res)=>{
-      const service = req.body;
-      const result = await database.insertOne(service);
-      res.json(result)
-    });
+    // // PostAPI
+    // app.post('/services',async(req, res)=>{
+    //   const service = req.body;
+    //   const result = await database.insertOne(service);
+    //   res.json(result)
+    // });
 
     // UI Address get API
     app.get('/booking', async(req, res)=>{
