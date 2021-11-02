@@ -1,5 +1,7 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const ObjectId = require('mongodb').ObjectId;
+
 const cors = require("cors");
 require("dotenv").config();
 
@@ -35,6 +37,21 @@ async function run() {
       const services = await cursor.toArray();
       res.send(services);
     });
+    // Get single
+    app.get('services/:id', async(req, res)=>{
+      const id = req.params.id;
+      console.log('getting specifi service', id)
+      const query = {_id: ObjectId(id)};
+      const services = await database.findOne(query);
+      res.json(service);
+    })
+
+    // PostAPI
+    app.post('/services',async(req, res)=>{
+      const service = req.body;
+      const result = await database.insertOne(service);
+      res.json(result)
+    });
 
     // UI Address get API
     app.get('/booking', async(req, res)=>{
@@ -47,9 +64,9 @@ async function run() {
     // Add Address
     app.post("/booking", async (req, res) => {
       const booking = req.body;
-      console.log("hit", booking);
+      // console.log("hit", booking);
       const result = await bookingCollect.insertOne(booking);
-      console.log(result);
+      // console.log(result);
 
       res.json(result);
     });
