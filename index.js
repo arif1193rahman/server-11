@@ -18,7 +18,6 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
-// console.log("lol0000000000000",uri);
 
 async function run() {
   try {
